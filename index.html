@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Guiri Reyes — Cinematographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    :root {
+      --cb:   #0A0A0A;
+      --fb:   #F5F2ED;
+      --duna: #C9B99A;
+      --fd:   'Italiana', 'Cormorant Garamond', Georgia, serif;
+      --fs:   'DM Sans', system-ui, sans-serif;
+    }
+
+    html, body {
+      background: var(--cb);
+      color: var(--fb);
+      font-family: var(--fs);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 62vh;
+      min-height: 420px;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,10,0.15) 0%,
+        rgba(10,10,10,0.40) 40%,
+        rgba(10,10,10,0.92) 100%
+      );
+    }
+
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    .hero-logo {
+      position: absolute;
+      bottom: 32px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── LOGO B ── */
+    .logo-b {
+      display: inline-grid;
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .logo-name {
+      font-family: var(--fd);
+      font-weight: 400;
+      font-size: 36px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      padding-right: 0.22em;
+      color: var(--fb);
+      line-height: 1.0;
+      white-space: nowrap;
+    }
+
+    .logo-line {
+      display: block;
+      height: 0.5px;
+      background: var(--duna);
+      margin: 9px 0;
+      width: 100%;
+    }
+
+    .logo-sub {
+      font-family: var(--fs);
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.55em;
+      padding-right: 0.55em;
+      color: rgba(245,242,237,0.80);
+      white-space: nowrap;
+    }
+
+    /* ── BIO ── */
+    .bio-section {
+      padding: 30px 32px 0;
+      text-align: center;
+    }
+
+    .bio-role {
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--fb);
+      line-height: 1.65;
+    }
+
+    .bio-location {
+      margin-top: 7px;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--duna);
+    }
+
+    .bio-sep {
+      display: block;
+      width: 28px;
+      height: 0.5px;
+      background: rgba(201,185,154,0.35);
+      margin: 20px auto 0;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section { margin-top: 28px; }
+
+    .section-header {
+      padding: 0 32px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-rule {
+      display: block;
+      width: 22px;
+      height: 0.5px;
+      background: var(--duna);
+      flex-shrink: 0;
+    }
+
+    .section-label {
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--duna);
+    }
+
+    .gallery-strip {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 32px;
+    }
+
+    .gallery-strip::-webkit-scrollbar { display: none; }
+
+    .gallery-item {
+      flex: 0 0 144px;
+      height: 144px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      position: relative;
+      background: #111;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+      transition: filter 0.35s ease, transform 0.35s ease;
+    }
+
+    .gallery-item:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.65) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .gallery-item-tag {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      font-weight: 300;
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(201,185,154,0.90);
+      pointer-events: none;
+    }
+
+    /* ── LINKS ── */
+    .links-section {
+      margin-top: 36px;
+      padding: 0 32px;
+    }
+
+    .link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 0.5px solid rgba(201,185,154,0.13);
+      text-decoration: none;
+      color: var(--fb);
+      transition: padding-left 0.2s ease;
+    }
+
+    .link-item:first-of-type {
+      border-top: 0.5px solid rgba(201,185,154,0.13);
+      margin-top: 14px;
+    }
+
+    .link-item:hover { padding-left: 6px; }
+
+    .link-item:hover .link-arrow {
+      color: var(--duna);
+      transform: translateX(5px);
+    }
+
+    .link-left { display: flex; flex-direction: column; gap: 3px; }
+
+    .link-title {
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: var(--fb);
+    }
+
+    .link-desc {
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.10em;
+      color: var(--duna);
+    }
+
+    .link-arrow {
+      font-size: 14px;
+      color: rgba(245,242,237,0.25);
+      transition: all 0.2s ease;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 56px;
+      padding: 22px 32px 64px;
+      text-align: center;
+      border-top: 0.5px solid rgba(201,185,154,0.07);
+    }
+
+    .footer-logo {
+      font-family: var(--fd);
+      font-size: 13px;
+      letter-spacing: 0.32em;
+      padding-right: 0.32em;
+      text-transform: uppercase;
+      color: rgba(245,242,237,0.18);
+    }
+
+    .footer-meta {
+      margin-top: 8px;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(201,185,154,0.22);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- HERO -->
+    <section class="hero">
+      <img class="hero-img" src="images/hero.jpg" alt="India — 2018" />
+      <div class="hero-overlay"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-logo">
+        <div class="logo-b">
+          <span class="logo-name">Guiri Reyes</span>
+          <span class="logo-line"></span>
+          <span class="logo-sub">Cinematographer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIO -->
+    <section class="bio-section">
+      <p class="bio-role">Cinematógrafo &amp; Camera Operator</p>
+      <p class="bio-location">São Paulo &nbsp;·&nbsp; Brasil</p>
+      <span class="bio-sep"></span>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label">Selected Work</span>
+      </div>
+      <div class="gallery-strip">
+        <div class="gallery-item">
+          <img src="images/img-live.jpg" alt="Live — São Paulo" style="object-position: center top;" />
+          <div class="gallery-item-overlay"></div>
+          <span class="gallery-item-tag">Live</span>
+        </div>
+        <div class="gallery-item">
+          <img src="images/img-fashion.jpg" alt="Fashion" style="object-position: center 15%;" />
+          <div class="gallery-item-overlay"></div>
+          <span class="gallery-item-tag">Fashion</span>
+        </div>
+        <div class="gallery-item">
+          <img src="images/img-doc.jpg" alt="Documentary — India" style="object-position: center;" />
+          <div class="gallery-item-overlay"></div>
+          <span class="gallery-item-tag">Doc</span>
+        </div>
+        <div class="gallery-item">
+          <img src="images/img-architecture.jpg" alt="Architecture — India" style="object-position: center;" />
+          <div class="gallery-item-overlay"></div>
+          <span class="gallery-item-tag">Architecture</span>
+        </div>
+        <div class="gallery-item">
+          <img src="images/img-culture.jpg" alt="Culture — India" style="object-position: center 30%;" />
+          <div class="gallery-item-overlay"></div>
+          <span class="gallery-item-tag">Culture</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section class="links-section">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label">Links</span>
+      </div>
+
+      <a href="#" class="link-item">
+        <div class="link-left">
+          <span class="link-title">Portfolio</span>
+          <span class="link-desc">guirireyes.com</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-item">
+        <div class="link-left">
+          <span class="link-title">Showreel</span>
+          <span class="link-desc">Vimeo · 2026</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-item">
+        <div class="link-left">
+          <span class="link-title">Instagram</span>
+          <span class="link-desc">@guirireyes</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-item">
+        <div class="link-left">
+          <span class="link-title">WhatsApp</span>
+          <span class="link-desc">Contato direto</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="#" class="link-item">
+        <div class="link-left">
+          <span class="link-title">E-mail</span>
+          <span class="link-desc">contato@guirireyes.com</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p class="footer-logo">Guiri Reyes</p>
+      <p class="footer-meta">Cinematographer &nbsp;·&nbsp; Camera Operator &nbsp;·&nbsp; São Paulo &nbsp;·&nbsp; 2026</p>
+    </footer>
+
+  </div>
+</body>
+</html>
