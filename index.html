@@ -192,78 +192,84 @@
     }
 
     /* ─────────────────────────────────────
-       INSTAGRAM EMBEDS (Reel + Post)
+       FLOAT VIDEOS
     ───────────────────────────────────── */
-    .embed-section { margin-top: 34px; }
+    .float-videos { margin-top: 36px; }
 
-    .insta-block { margin: 0 32px; }
-
-    .insta-frame-wrap {
-      position: relative;
-      background: rgba(10,10,10,0.55);
+    .float-video {
+      margin: 0 32px;
       border: 0.5px solid rgba(201,185,154,0.18);
       overflow: hidden;
-      line-height: 0;
+      background: var(--cb);
     }
 
-    .insta-frame {
+    .float-video + .float-video { margin-top: 12px; }
+
+    /* janela de recorte — esconde o chrome do Instagram */
+    .float-video-crop {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+
+    .float-video-crop iframe {
       width: 100%;
+      height: 600px;
+      margin-top: -52px; /* pula o header do Instagram */
       border: none;
       display: block;
+      pointer-events: none; /* overlay captura o clique */
     }
 
-    .insta-frame.reel-frame  { height: 700px; }
-    .insta-frame.post-frame  { height: 540px; }
-
-    /* botão "ver no Instagram" abaixo do embed */
-    .insta-open-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 0;
-      text-decoration: none;
-      color: var(--duna);
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      border: 0.5px solid rgba(201,185,154,0.18);
-      border-top: none;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .insta-open-link:hover {
-      color: var(--fb);
-      border-color: rgba(201,185,154,0.44);
-      background: rgba(201,185,154,0.04);
-    }
-
-    /* badge "↗ Instagram" no canto do post 2 */
-    .insta-corner-badge {
+    /* fade na borda inferior do recorte */
+    .float-video-crop::after {
+      content: '';
       position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 10;
-      padding: 5px 10px;
-      background: rgba(10,10,10,0.82);
-      border: 0.5px solid rgba(201,185,154,0.28);
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(10,10,10,0.95));
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* overlay transparente — clicar abre Instagram */
+    .float-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* barra inferior */
+    .float-video-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(10,10,10,0.85);
+      border-top: 0.5px solid rgba(201,185,154,0.10);
+    }
+
+    .float-video-label {
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
       color: var(--duna);
-      text-decoration: none;
+    }
+
+    .float-video-action {
+      font-weight: 300;
       font-size: 9px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      font-weight: 300;
-      transition: border-color 0.2s ease;
-      line-height: 1.4;
+      color: rgba(245,242,237,0.38);
+      text-decoration: none;
+      transition: color 0.2s ease;
     }
 
-    .insta-corner-badge:hover { border-color: rgba(201,185,154,0.55); }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(201,185,154,0.35); }
-      50%       { box-shadow: 0 0 0 12px rgba(201,185,154,0); }
-    }
+    .float-video:hover .float-video-action { color: var(--duna); }
 
     /* ─────────────────────────────────────
        GALLERY STRIP
@@ -442,35 +448,6 @@
       <span class="bio-sep"></span>
     </section>
 
-    <!-- REEL 1 — iframe embed direto, botão abre original no Instagram -->
-    <section class="embed-section">
-      <div class="section-header">
-        <span class="section-rule"></span>
-        <span class="section-label">Featured Reel</span>
-      </div>
-      <div class="insta-block">
-        <div class="insta-frame-wrap">
-          <iframe
-            class="insta-frame reel-frame"
-            src="https://www.instagram.com/reel/CpIIEKhoUut/embed/"
-            frameborder="0"
-            scrolling="no"
-            allowtransparency="true"
-            allow="autoplay; encrypted-media; picture-in-picture"
-          ></iframe>
-        </div>
-        <a
-          href="https://www.instagram.com/reel/CpIIEKhoUut/?igsh=ZDE0b251cDdjdTRz"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="insta-open-link"
-        >
-          <span>Ver reel original no Instagram</span>
-          <span>↗</span>
-        </a>
-      </div>
-    </section>
-
     <!-- GALLERY STRIP -->
     <section class="gallery-section">
       <div class="section-header">
@@ -503,42 +480,6 @@
           <div class="gallery-item-overlay"></div>
           <span class="gallery-item-tag">Culture</span>
         </div>
-      </div>
-    </section>
-
-    <!-- INSTAGRAM EMBED — vídeo inline, começa mutado, clica para ir ao post -->
-    <!-- POST 2 — iframe inline, começa mutado, badge leva ao post no Instagram -->
-    <section class="embed-section">
-      <div class="section-header">
-        <span class="section-rule"></span>
-        <span class="section-label">Selected Post</span>
-      </div>
-      <div class="insta-block">
-        <div class="insta-frame-wrap">
-          <iframe
-            class="insta-frame post-frame"
-            src="https://www.instagram.com/p/Bvu4gqEBKzo/embed/"
-            frameborder="0"
-            scrolling="no"
-            allowtransparency="true"
-            allow="autoplay; encrypted-media; picture-in-picture"
-          ></iframe>
-          <a
-            href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
-            target="_blank"
-            rel="noopener noreferrer"
-            class="insta-corner-badge"
-          >↗ Instagram</a>
-        </div>
-        <a
-          href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
-          target="_blank"
-          rel="noopener noreferrer"
-          class="insta-open-link"
-        >
-          <span>Ver post original no Instagram</span>
-          <span>↗</span>
-        </a>
       </div>
     </section>
 
@@ -589,6 +530,62 @@
         <span class="link-arrow">→</span>
       </a>
 
+    </section>
+
+    <!-- FLOAT VIDEOS — depois dos links -->
+    <section class="float-videos">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label">Videos</span>
+      </div>
+
+      <div class="float-video">
+        <div class="float-video-crop">
+          <iframe
+            src="https://www.instagram.com/reel/CpIIEKhoUut/embed/"
+            frameborder="0" scrolling="no"
+            allowtransparency="true"
+            allow="autoplay; encrypted-media; picture-in-picture"
+          ></iframe>
+          <a
+            href="https://www.instagram.com/reel/CpIIEKhoUut/?igsh=ZDE0b251cDdjdTRz"
+            target="_blank" rel="noopener noreferrer"
+            class="float-video-overlay" aria-label="Ver reel no Instagram"
+          ></a>
+        </div>
+        <div class="float-video-bar">
+          <span class="float-video-label">Reel</span>
+          <a
+            href="https://www.instagram.com/reel/CpIIEKhoUut/?igsh=ZDE0b251cDdjdTRz"
+            target="_blank" rel="noopener noreferrer"
+            class="float-video-action"
+          >Ver no Instagram ↗</a>
+        </div>
+      </div>
+
+      <div class="float-video">
+        <div class="float-video-crop">
+          <iframe
+            src="https://www.instagram.com/p/Bvu4gqEBKzo/embed/"
+            frameborder="0" scrolling="no"
+            allowtransparency="true"
+            allow="autoplay; encrypted-media; picture-in-picture"
+          ></iframe>
+          <a
+            href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
+            target="_blank" rel="noopener noreferrer"
+            class="float-video-overlay" aria-label="Ver post no Instagram"
+          ></a>
+        </div>
+        <div class="float-video-bar">
+          <span class="float-video-label">Post</span>
+          <a
+            href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
+            target="_blank" rel="noopener noreferrer"
+            class="float-video-action"
+          >Ver no Instagram ↗</a>
+        </div>
+      </div>
     </section>
 
     <!-- FOOTER -->
