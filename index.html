@@ -27,60 +27,75 @@
       overflow-x: hidden;
     }
 
+    /* ─────────────────────────────────────
+       VIMEO — FUNDO DE PÁGINA
+    ───────────────────────────────────── */
+    .vimeo-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .vimeo-bg iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 177.78vh;
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 56.25vw;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: none;
+    }
+
+    .vimeo-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background: rgba(10,10,10,0.74);
+    }
+
+    /* ─────────────────────────────────────
+       PAGE CONTAINER
+    ───────────────────────────────────── */
     .page {
+      position: relative;
+      z-index: 2;
       max-width: 430px;
       margin: 0 auto;
       min-height: 100vh;
     }
 
-    /* ── HERO ── */
+    /* ─────────────────────────────────────
+       HERO
+    ───────────────────────────────────── */
     .hero {
       position: relative;
-      width: 100%;
       height: 62vh;
       min-height: 420px;
-      overflow: hidden;
-    }
-
-    .hero-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 28%;
-      display: block;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(10,10,10,0.15) 0%,
-        rgba(10,10,10,0.40) 40%,
-        rgba(10,10,10,0.92) 100%
-      );
-    }
-
-    .hero-grain {
-      position: absolute;
-      inset: 0;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 180px 180px;
-      pointer-events: none;
-      mix-blend-mode: overlay;
-    }
-
-    .hero-logo {
-      position: absolute;
-      bottom: 32px;
-      left: 0;
-      right: 0;
       display: flex;
+      align-items: flex-end;
       justify-content: center;
+      padding-bottom: 40px;
     }
 
-    /* ── LOGO B ── */
+    /* fade para o conteúdo abaixo */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 160px;
+      background: linear-gradient(to bottom, transparent, rgba(10,10,10,0.96));
+      pointer-events: none;
+    }
+
+    .hero-logo { position: relative; z-index: 1; }
+
+    /* ─────────────────────────────────────
+       LOGO B
+    ───────────────────────────────────── */
     .logo-b {
       display: inline-grid;
       grid-template-columns: 1fr;
@@ -113,13 +128,15 @@
       font-size: 9px;
       letter-spacing: 0.55em;
       padding-right: 0.55em;
-      color: rgba(245,242,237,0.80);
+      color: rgba(245,242,237,0.78);
       white-space: nowrap;
     }
 
-    /* ── BIO ── */
+    /* ─────────────────────────────────────
+       BIO
+    ───────────────────────────────────── */
     .bio-section {
-      padding: 30px 32px 0;
+      padding: 28px 32px 0;
       text-align: center;
     }
 
@@ -144,15 +161,15 @@
       display: block;
       width: 28px;
       height: 0.5px;
-      background: rgba(201,185,154,0.35);
+      background: rgba(201,185,154,0.30);
       margin: 20px auto 0;
     }
 
-    /* ── GALLERY ── */
-    .gallery-section { margin-top: 28px; }
-
+    /* ─────────────────────────────────────
+       SECTION HEADER (reutilizável)
+    ───────────────────────────────────── */
     .section-header {
-      padding: 0 32px 12px;
+      padding: 0 32px 14px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -174,6 +191,111 @@
       color: var(--duna);
     }
 
+    /* ─────────────────────────────────────
+       REEL CARD — Instagram Reel (clicável)
+    ───────────────────────────────────── */
+    .reel-section { margin-top: 34px; }
+
+    .reel-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin: 0 32px;
+      padding: 22px 24px;
+      background: rgba(10,10,10,0.55);
+      border: 0.5px solid rgba(201,185,154,0.20);
+      text-decoration: none;
+      color: var(--fb);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .reel-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,185,154,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .reel-card:hover {
+      border-color: rgba(201,185,154,0.48);
+      background: rgba(10,10,10,0.72);
+    }
+
+    .reel-card:hover .reel-arrow {
+      color: var(--duna);
+      transform: translateX(4px);
+    }
+
+    .reel-play-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(201,185,154,0.50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      animation: pulse 2.8s ease-in-out infinite;
+    }
+
+    .reel-play-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--duna);
+      margin-left: 3px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,185,154,0.35); }
+      50%       { box-shadow: 0 0 0 12px rgba(201,185,154,0); }
+    }
+
+    .reel-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .reel-type {
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--duna);
+    }
+
+    .reel-title {
+      font-family: var(--fd);
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fb);
+      line-height: 1.0;
+    }
+
+    .reel-cta {
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.10em;
+      color: rgba(245,242,237,0.38);
+    }
+
+    .reel-arrow {
+      font-size: 15px;
+      color: rgba(245,242,237,0.22);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────
+       GALLERY STRIP
+    ───────────────────────────────────── */
+    .gallery-section { margin-top: 34px; }
+
     .gallery-strip {
       display: flex;
       gap: 4px;
@@ -187,8 +309,8 @@
     .gallery-strip::-webkit-scrollbar { display: none; }
 
     .gallery-item {
-      flex: 0 0 144px;
-      height: 144px;
+      flex: 0 0 136px;
+      height: 136px;
       overflow: hidden;
       scroll-snap-align: start;
       position: relative;
@@ -200,7 +322,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: grayscale(20%) contrast(1.05);
+      filter: grayscale(18%) contrast(1.05);
       transition: filter 0.35s ease, transform 0.35s ease;
     }
 
@@ -224,11 +346,44 @@
       font-size: 8px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(201,185,154,0.90);
+      color: rgba(201,185,154,0.88);
       pointer-events: none;
     }
 
-    /* ── LINKS ── */
+    /* ─────────────────────────────────────
+       INSTAGRAM EMBED — Post com vídeo
+    ───────────────────────────────────── */
+    .embed-section { margin-top: 34px; }
+
+    .embed-outer {
+      margin: 0 32px;
+    }
+
+    /* forçar largura e remover bordas padrão do Instagram */
+    .embed-outer .instagram-media {
+      background: rgba(10,10,10,0.50) !important;
+      border: 0.5px solid rgba(201,185,154,0.15) !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      max-width: 100% !important;
+      min-width: auto !important;
+      width: calc(100% - 2px) !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .embed-hint {
+      margin-top: 10px;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: rgba(201,185,154,0.40);
+      text-align: center;
+    }
+
+    /* ─────────────────────────────────────
+       LINKS
+    ───────────────────────────────────── */
     .links-section {
       margin-top: 36px;
       padding: 0 32px;
@@ -239,14 +394,14 @@
       justify-content: space-between;
       align-items: center;
       padding: 16px 0;
-      border-bottom: 0.5px solid rgba(201,185,154,0.13);
+      border-bottom: 0.5px solid rgba(201,185,154,0.12);
       text-decoration: none;
       color: var(--fb);
       transition: padding-left 0.2s ease;
     }
 
     .link-item:first-of-type {
-      border-top: 0.5px solid rgba(201,185,154,0.13);
+      border-top: 0.5px solid rgba(201,185,154,0.12);
       margin-top: 14px;
     }
 
@@ -275,16 +430,17 @@
 
     .link-arrow {
       font-size: 14px;
-      color: rgba(245,242,237,0.25);
+      color: rgba(245,242,237,0.22);
       transition: all 0.2s ease;
-      line-height: 1;
       flex-shrink: 0;
     }
 
-    /* ── FOOTER ── */
+    /* ─────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────── */
     .footer {
       margin-top: 56px;
-      padding: 22px 32px 64px;
+      padding: 22px 32px 72px;
       text-align: center;
       border-top: 0.5px solid rgba(201,185,154,0.07);
     }
@@ -295,7 +451,7 @@
       letter-spacing: 0.32em;
       padding-right: 0.32em;
       text-transform: uppercase;
-      color: rgba(245,242,237,0.18);
+      color: rgba(245,242,237,0.16);
     }
 
     .footer-meta {
@@ -304,19 +460,29 @@
       font-size: 9px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(201,185,154,0.22);
+      color: rgba(201,185,154,0.20);
     }
   </style>
 </head>
 
 <body>
+
+  <!-- ── FUNDO DE PÁGINA: VIMEO ── -->
+  <div class="vimeo-bg">
+    <iframe
+      src="https://player.vimeo.com/video/1186610393?h=5787ea5b49&background=1&autoplay=1&loop=1&muted=1&byline=0&title=0"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="vimeo-overlay"></div>
+
+  <!-- ── CONTEÚDO ── -->
   <div class="page">
 
     <!-- HERO -->
     <section class="hero">
-      <img class="hero-img" src="images/hero.jpg" alt="India — 2018" />
-      <div class="hero-overlay"></div>
-      <div class="hero-grain"></div>
       <div class="hero-logo">
         <div class="logo-b">
           <span class="logo-name">Guiri Reyes</span>
@@ -333,7 +499,33 @@
       <span class="bio-sep"></span>
     </section>
 
-    <!-- GALLERY -->
+    <!-- REEL CARD — clique abre o reel no Instagram -->
+    <section class="reel-section">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label">Featured Reel</span>
+      </div>
+      <a
+        href="https://www.instagram.com/reel/CpIIEKhoUut/?igsh=ZDE0b251cDdjdTRz"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="reel-card"
+      >
+        <div class="reel-play-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="reel-info">
+          <span class="reel-type">Instagram Reel</span>
+          <span class="reel-title">Ver Reel</span>
+          <span class="reel-cta">Abrir no Instagram</span>
+        </div>
+        <span class="reel-arrow">→</span>
+      </a>
+    </section>
+
+    <!-- GALLERY STRIP -->
     <section class="gallery-section">
       <div class="section-header">
         <span class="section-rule"></span>
@@ -341,7 +533,7 @@
       </div>
       <div class="gallery-strip">
         <div class="gallery-item">
-          <img src="images/img-live.jpg" alt="Live — São Paulo" style="object-position: center top;" />
+          <img src="images/img-live.jpg" alt="Live" style="object-position: center top;" />
           <div class="gallery-item-overlay"></div>
           <span class="gallery-item-tag">Live</span>
         </div>
@@ -351,20 +543,37 @@
           <span class="gallery-item-tag">Fashion</span>
         </div>
         <div class="gallery-item">
-          <img src="images/img-doc.jpg" alt="Documentary — India" style="object-position: center;" />
+          <img src="images/img-doc.jpg" alt="Doc" style="object-position: center;" />
           <div class="gallery-item-overlay"></div>
           <span class="gallery-item-tag">Doc</span>
         </div>
         <div class="gallery-item">
-          <img src="images/img-architecture.jpg" alt="Architecture — India" style="object-position: center;" />
+          <img src="images/img-architecture.jpg" alt="Architecture" style="object-position: center;" />
           <div class="gallery-item-overlay"></div>
           <span class="gallery-item-tag">Architecture</span>
         </div>
         <div class="gallery-item">
-          <img src="images/img-culture.jpg" alt="Culture — India" style="object-position: center 30%;" />
+          <img src="images/img-culture.jpg" alt="Culture" style="object-position: center 30%;" />
           <div class="gallery-item-overlay"></div>
           <span class="gallery-item-tag">Culture</span>
         </div>
+      </div>
+    </section>
+
+    <!-- INSTAGRAM EMBED — vídeo inline, começa mutado, clica para ir ao post -->
+    <section class="embed-section">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label">Selected Post</span>
+      </div>
+      <div class="embed-outer">
+        <blockquote
+          class="instagram-media"
+          data-instgrm-permalink="https://www.instagram.com/p/Bvu4gqEBKzo/"
+          data-instgrm-version="14"
+          style="background:#0A0A0A; border:0; border-radius:0; box-shadow:none; margin:0; max-width:100%; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+        </blockquote>
+        <p class="embed-hint">↳ toque no ícone de som no player para ativar o áudio</p>
       </div>
     </section>
 
@@ -375,7 +584,7 @@
         <span class="section-label">Links</span>
       </div>
 
-      <a href="#" class="link-item">
+      <a href="https://www.guirireyes.com" target="_blank" rel="noopener" class="link-item">
         <div class="link-left">
           <span class="link-title">Portfolio</span>
           <span class="link-desc">guirireyes.com</span>
@@ -383,34 +592,34 @@
         <span class="link-arrow">→</span>
       </a>
 
-      <a href="#" class="link-item">
+      <a href="https://www.cantareirafilmes.com" target="_blank" rel="noopener" class="link-item">
         <div class="link-left">
-          <span class="link-title">Showreel</span>
-          <span class="link-desc">Vimeo · 2026</span>
+          <span class="link-title">Cantareira Filmes</span>
+          <span class="link-desc">Produtora audiovisual</span>
         </div>
         <span class="link-arrow">→</span>
       </a>
 
-      <a href="#" class="link-item">
+      <a href="https://www.rosaneon.com" target="_blank" rel="noopener" class="link-item">
+        <div class="link-left">
+          <span class="link-title">Rosa Neon</span>
+          <span class="link-desc">Produtora parceira</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="https://www.instagram.com/shanti.eyes" target="_blank" rel="noopener" class="link-item">
         <div class="link-left">
           <span class="link-title">Instagram</span>
-          <span class="link-desc">@guirireyes</span>
+          <span class="link-desc">@shanti.eyes</span>
         </div>
         <span class="link-arrow">→</span>
       </a>
 
-      <a href="#" class="link-item">
+      <a href="https://www.linkedin.com/in/guirireyes/" target="_blank" rel="noopener" class="link-item">
         <div class="link-left">
-          <span class="link-title">WhatsApp</span>
-          <span class="link-desc">Contato direto</span>
-        </div>
-        <span class="link-arrow">→</span>
-      </a>
-
-      <a href="#" class="link-item">
-        <div class="link-left">
-          <span class="link-title">E-mail</span>
-          <span class="link-desc">contato@guirireyes.com</span>
+          <span class="link-title">LinkedIn</span>
+          <span class="link-desc">Guiri Reyes</span>
         </div>
         <span class="link-arrow">→</span>
       </a>
@@ -424,5 +633,8 @@
     </footer>
 
   </div>
+
+  <script async src="//www.instagram.com/embed.js"></script>
+
 </body>
 </html>
