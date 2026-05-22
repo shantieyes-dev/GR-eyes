@@ -215,10 +215,9 @@
     .float-video-crop iframe {
       width: 100%;
       height: 600px;
-      margin-top: -52px; /* pula o header do Instagram */
+      margin-top: -52px;
       border: none;
       display: block;
-      pointer-events: none; /* overlay captura o clique */
     }
 
     /* fade na borda inferior do recorte */
@@ -408,9 +407,9 @@
     .reel-modal-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(10,10,10,0.86);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(10,10,10,0.48);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
       cursor: pointer;
     }
 
@@ -456,7 +455,7 @@
     /* janela de recorte — esconde chrome do Instagram */
     .reel-modal-crop {
       position: relative;
-      height: 488px;
+      height: 416px;
       overflow: hidden;
     }
 
@@ -468,13 +467,13 @@
       display: block;
     }
 
-    /* fade suave na borda inferior */
+    /* fade cobre o footer do Instagram antes de aparecer */
     .reel-modal-crop::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 90px;
-      background: linear-gradient(to bottom, transparent, rgba(10,10,10,0.95));
+      height: 130px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(10,10,10,0.80) 55%, #0A0A0A 100%);
       pointer-events: none;
       z-index: 2;
     }
@@ -670,11 +669,6 @@
             allowtransparency="true"
             allow="autoplay; encrypted-media; picture-in-picture"
           ></iframe>
-          <a
-            href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
-            target="_blank" rel="noopener noreferrer"
-            class="float-video-overlay" aria-label="Ver post no Instagram"
-          ></a>
         </div>
         <div class="float-video-bar">
           <span class="float-video-label">Post</span>
