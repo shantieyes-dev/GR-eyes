@@ -192,103 +192,77 @@
     }
 
     /* ─────────────────────────────────────
-       REEL CARD — Instagram Reel (clicável)
+       INSTAGRAM EMBEDS (Reel + Post)
     ───────────────────────────────────── */
-    .reel-section { margin-top: 34px; }
+    .embed-section { margin-top: 34px; }
 
-    .reel-card {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin: 0 32px;
-      padding: 22px 24px;
-      background: rgba(10,10,10,0.55);
-      border: 0.5px solid rgba(201,185,154,0.20);
-      text-decoration: none;
-      color: var(--fb);
+    .insta-block { margin: 0 32px; }
+
+    .insta-frame-wrap {
       position: relative;
+      background: rgba(10,10,10,0.55);
+      border: 0.5px solid rgba(201,185,154,0.18);
       overflow: hidden;
-      transition: border-color 0.3s ease, background 0.3s ease;
+      line-height: 0;
     }
 
-    .reel-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(201,185,154,0.05) 0%, transparent 70%);
-      pointer-events: none;
+    .insta-frame {
+      width: 100%;
+      border: none;
+      display: block;
     }
 
-    .reel-card:hover {
-      border-color: rgba(201,185,154,0.48);
-      background: rgba(10,10,10,0.72);
-    }
+    .insta-frame.reel-frame  { height: 700px; }
+    .insta-frame.post-frame  { height: 540px; }
 
-    .reel-card:hover .reel-arrow {
-      color: var(--duna);
-      transform: translateX(4px);
-    }
-
-    .reel-play-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 0.5px solid rgba(201,185,154,0.50);
+    /* botão "ver no Instagram" abaixo do embed */
+    .insta-open-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      animation: pulse 2.8s ease-in-out infinite;
+      gap: 8px;
+      padding: 13px 0;
+      text-decoration: none;
+      color: var(--duna);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 0.5px solid rgba(201,185,154,0.18);
+      border-top: none;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
-    .reel-play-btn svg {
-      width: 16px;
-      height: 16px;
-      fill: var(--duna);
-      margin-left: 3px;
+    .insta-open-link:hover {
+      color: var(--fb);
+      border-color: rgba(201,185,154,0.44);
+      background: rgba(201,185,154,0.04);
     }
+
+    /* badge "↗ Instagram" no canto do post 2 */
+    .insta-corner-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      padding: 5px 10px;
+      background: rgba(10,10,10,0.82);
+      border: 0.5px solid rgba(201,185,154,0.28);
+      color: var(--duna);
+      text-decoration: none;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 300;
+      transition: border-color 0.2s ease;
+      line-height: 1.4;
+    }
+
+    .insta-corner-badge:hover { border-color: rgba(201,185,154,0.55); }
 
     @keyframes pulse {
       0%, 100% { box-shadow: 0 0 0 0 rgba(201,185,154,0.35); }
       50%       { box-shadow: 0 0 0 12px rgba(201,185,154,0); }
-    }
-
-    .reel-info {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      flex: 1;
-    }
-
-    .reel-type {
-      font-weight: 300;
-      font-size: 9px;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--duna);
-    }
-
-    .reel-title {
-      font-family: var(--fd);
-      font-size: 22px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--fb);
-      line-height: 1.0;
-    }
-
-    .reel-cta {
-      font-weight: 300;
-      font-size: 10px;
-      letter-spacing: 0.10em;
-      color: rgba(245,242,237,0.38);
-    }
-
-    .reel-arrow {
-      font-size: 15px;
-      color: rgba(245,242,237,0.22);
-      transition: all 0.2s ease;
-      flex-shrink: 0;
     }
 
     /* ─────────────────────────────────────
@@ -348,37 +322,6 @@
       text-transform: uppercase;
       color: rgba(201,185,154,0.88);
       pointer-events: none;
-    }
-
-    /* ─────────────────────────────────────
-       INSTAGRAM EMBED — Post com vídeo
-    ───────────────────────────────────── */
-    .embed-section { margin-top: 34px; }
-
-    .embed-outer {
-      margin: 0 32px;
-    }
-
-    /* forçar largura e remover bordas padrão do Instagram */
-    .embed-outer .instagram-media {
-      background: rgba(10,10,10,0.50) !important;
-      border: 0.5px solid rgba(201,185,154,0.15) !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      max-width: 100% !important;
-      min-width: auto !important;
-      width: calc(100% - 2px) !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    .embed-hint {
-      margin-top: 10px;
-      font-weight: 300;
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      color: rgba(201,185,154,0.40);
-      text-align: center;
     }
 
     /* ─────────────────────────────────────
@@ -499,30 +442,33 @@
       <span class="bio-sep"></span>
     </section>
 
-    <!-- REEL CARD — clique abre o reel no Instagram -->
-    <section class="reel-section">
+    <!-- REEL 1 — iframe embed direto, botão abre original no Instagram -->
+    <section class="embed-section">
       <div class="section-header">
         <span class="section-rule"></span>
         <span class="section-label">Featured Reel</span>
       </div>
-      <a
-        href="https://www.instagram.com/reel/CpIIEKhoUut/?igsh=ZDE0b251cDdjdTRz"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="reel-card"
-      >
-        <div class="reel-play-btn">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
+      <div class="insta-block">
+        <div class="insta-frame-wrap">
+          <iframe
+            class="insta-frame reel-frame"
+            src="https://www.instagram.com/reel/CpIIEKhoUut/embed/"
+            frameborder="0"
+            scrolling="no"
+            allowtransparency="true"
+            allow="autoplay; encrypted-media; picture-in-picture"
+          ></iframe>
         </div>
-        <div class="reel-info">
-          <span class="reel-type">Instagram Reel</span>
-          <span class="reel-title">Ver Reel</span>
-          <span class="reel-cta">Abrir no Instagram</span>
-        </div>
-        <span class="reel-arrow">→</span>
-      </a>
+        <a
+          href="https://www.instagram.com/reel/CpIIEKhoUut/?igsh=ZDE0b251cDdjdTRz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="insta-open-link"
+        >
+          <span>Ver reel original no Instagram</span>
+          <span>↗</span>
+        </a>
+      </div>
     </section>
 
     <!-- GALLERY STRIP -->
@@ -561,19 +507,38 @@
     </section>
 
     <!-- INSTAGRAM EMBED — vídeo inline, começa mutado, clica para ir ao post -->
+    <!-- POST 2 — iframe inline, começa mutado, badge leva ao post no Instagram -->
     <section class="embed-section">
       <div class="section-header">
         <span class="section-rule"></span>
         <span class="section-label">Selected Post</span>
       </div>
-      <div class="embed-outer">
-        <blockquote
-          class="instagram-media"
-          data-instgrm-permalink="https://www.instagram.com/p/Bvu4gqEBKzo/"
-          data-instgrm-version="14"
-          style="background:#0A0A0A; border:0; border-radius:0; box-shadow:none; margin:0; max-width:100%; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-        </blockquote>
-        <p class="embed-hint">↳ toque no ícone de som no player para ativar o áudio</p>
+      <div class="insta-block">
+        <div class="insta-frame-wrap">
+          <iframe
+            class="insta-frame post-frame"
+            src="https://www.instagram.com/p/Bvu4gqEBKzo/embed/"
+            frameborder="0"
+            scrolling="no"
+            allowtransparency="true"
+            allow="autoplay; encrypted-media; picture-in-picture"
+          ></iframe>
+          <a
+            href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            class="insta-corner-badge"
+          >↗ Instagram</a>
+        </div>
+        <a
+          href="https://www.instagram.com/p/Bvu4gqEBKzo/?igsh=MTh4b3FwdXlmM3F1ZA=="
+          target="_blank"
+          rel="noopener noreferrer"
+          class="insta-open-link"
+        >
+          <span>Ver post original no Instagram</span>
+          <span>↗</span>
+        </a>
       </div>
     </section>
 
@@ -634,7 +599,6 @@
 
   </div>
 
-  <script async src="//www.instagram.com/embed.js"></script>
 
 </body>
 </html>
