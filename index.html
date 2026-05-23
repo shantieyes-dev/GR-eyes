@@ -229,6 +229,49 @@
       display: block;
     }
 
+    .float-video-native {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: var(--cb);
+    }
+
+    .float-video-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      padding: 24px;
+      text-align: center;
+      color: var(--fb);
+      text-decoration: none;
+      background: rgba(10,10,10,0.82);
+      border: 0.5px solid rgba(201,185,154,0.14);
+    }
+
+    .float-video-fallback-title {
+      font-weight: 300;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--duna);
+    }
+
+    .float-video-fallback-link {
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,242,237,0.42);
+    }
+
+    .float-video-reel.is-missing-native .float-video-native { display: none; }
+    .float-video-reel.is-missing-native .float-video-fallback { display: flex; }
+
     /* máscara topo — apaga 4px residuais */
     .float-video-crop .vid-mask-top {
       position: absolute;
@@ -903,13 +946,13 @@
         <!-- Reel 1: coluna esquerda, portrait -->
         <div class="float-video float-video-reel">
           <div class="float-video-crop">
-            <iframe
-              src="https://www.instagram.com/reel/CciO8huJew8/embed/"
-              frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"
-              allow="autoplay; encrypted-media; picture-in-picture; web-share"
-            ></iframe>
-            <div class="vid-mask-top"></div>
-            <div class="vid-mask-bottom"></div>
+            <video class="float-video-native" controls playsinline preload="metadata" poster="images/img-fashion.jpg">
+              <source src="videos/reel-cci-o8hu-jew8.mp4" type="video/mp4">
+            </video>
+            <a href="https://www.instagram.com/reel/CciO8huJew8/?igsh=MTJ1YmZkcjY3MHQ3NQ==" target="_blank" rel="noopener noreferrer" class="float-video-fallback">
+              <span class="float-video-fallback-title">Video local em breve</span>
+              <span class="float-video-fallback-link">Abrir no Instagram ↗</span>
+            </a>
           </div>
           <div class="float-video-bar">
             <span class="float-video-label">Reel</span>
@@ -920,13 +963,13 @@
         <!-- Reel 2: coluna direita, portrait -->
         <div class="float-video float-video-reel">
           <div class="float-video-crop">
-            <iframe
-              src="https://www.instagram.com/reel/CtPOqGsrl0x/embed/"
-              frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"
-              allow="autoplay; encrypted-media; picture-in-picture; web-share"
-            ></iframe>
-            <div class="vid-mask-top"></div>
-            <div class="vid-mask-bottom"></div>
+            <video class="float-video-native" controls playsinline preload="metadata" poster="images/img-doc.jpg">
+              <source src="videos/reel-ctpoqgsrl0x.mp4" type="video/mp4">
+            </video>
+            <a href="https://www.instagram.com/reel/CtPOqGsrl0x/?igsh=c253cDN6em1vNjI5" target="_blank" rel="noopener noreferrer" class="float-video-fallback">
+              <span class="float-video-fallback-title">Video local em breve</span>
+              <span class="float-video-fallback-link">Abrir no Instagram ↗</span>
+            </a>
           </div>
           <div class="float-video-bar">
             <span class="float-video-label">Reel</span>
@@ -1053,6 +1096,19 @@
         lang = lang === 'pt' ? 'en' : 'pt';
         document.documentElement.setAttribute('data-lang', lang);
         langBtn.textContent = lang === 'pt' ? 'EN' : 'PT';
+      });
+
+      /* ── LOCAL REELS FALLBACK ── */
+      var nativeReels = document.querySelectorAll('.float-video-native');
+      nativeReels.forEach(function (video) {
+        var markMissing = function () {
+          var card = video.closest('.float-video-reel');
+          if (card) card.classList.add('is-missing-native');
+        };
+        video.addEventListener('error', markMissing);
+        video.querySelectorAll('source').forEach(function (source) {
+          source.addEventListener('error', markMissing);
+        });
       });
 
     })();
