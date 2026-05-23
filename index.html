@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Guiri Reyes — Cinematographer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0A0A'/><text x='16' y='24' text-anchor='middle' font-size='22' fill='%23C9B99A' font-family='Georgia,serif'>G</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
@@ -535,6 +536,170 @@
     .reel-modal-bar-link:hover { color: var(--duna); }
 
     /* ─────────────────────────────────────
+       INTRO SCREEN
+    ───────────────────────────────────── */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--cb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.55s ease;
+      pointer-events: none;
+    }
+    #intro.hide { opacity: 0; }
+
+    .intro-logo { text-align: center; animation: introIn 0.9s ease forwards; }
+    @keyframes introIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ─────────────────────────────────────
+       LANG TOGGLE
+    ───────────────────────────────────── */
+    .lang-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 300;
+      background: rgba(10,10,10,0.65);
+      border: 0.5px solid rgba(201,185,154,0.28);
+      color: rgba(201,185,154,0.65);
+      font-family: var(--fs);
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      padding: 5px 9px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .lang-toggle:hover { border-color: var(--duna); color: var(--duna); }
+
+    [data-lang="en"] .lang-pt { display: none; }
+    [data-lang="pt"] .lang-en { display: none; }
+
+    /* ─────────────────────────────────────
+       SCROLL HINT
+    ───────────────────────────────────── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 0.4s ease;
+    }
+    .scroll-hint-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--duna);
+      opacity: 0.5;
+    }
+    .scroll-hint-line {
+      display: block;
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--duna), transparent);
+      animation: scrollPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 0.55; }
+      50%       { transform: scaleY(0.35); opacity: 0.9; }
+    }
+
+    /* ─────────────────────────────────────
+       BIO AVATAR + TEXT
+    ───────────────────────────────────── */
+    .bio-avatar-wrap {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 16px;
+      border: 0.5px solid rgba(201,185,154,0.28);
+    }
+    .bio-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .bio-text {
+      margin-top: 12px;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 1.72;
+      color: rgba(245,242,237,0.58);
+      padding: 0 4px;
+    }
+
+    /* ─────────────────────────────────────
+       TRAILER
+    ───────────────────────────────────── */
+    .trailer-section { margin-top: 36px; }
+    .trailer-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin: 0 32px;
+    }
+    .trailer-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ─────────────────────────────────────
+       CLIENTS
+    ───────────────────────────────────── */
+    .clients-section { margin-top: 48px; padding-bottom: 8px; }
+    .clients-strip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      padding: 16px 32px 0;
+      flex-wrap: wrap;
+    }
+    .client-item {
+      display: flex;
+      align-items: center;
+      opacity: 0.45;
+      transition: opacity 0.3s ease;
+    }
+    .client-item:hover { opacity: 0.9; }
+    .client-logo {
+      height: 28px;
+      width: auto;
+      max-width: 100px;
+      object-fit: contain;
+      filter: grayscale(100%) brightness(2.5);
+      display: block;
+    }
+    .client-item:hover .client-logo { filter: grayscale(0%) brightness(1); }
+
+    /* ─────────────────────────────────────
        FOOTER
     ───────────────────────────────────── */
     .footer {
@@ -566,6 +731,20 @@
 
 <body>
 
+  <!-- ── INTRO SCREEN ── -->
+  <div id="intro">
+    <div class="intro-logo">
+      <div class="logo-b">
+        <span class="logo-name">Guiri Reyes</span>
+        <span class="logo-line"></span>
+        <span class="logo-sub">Cinematographer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LANG TOGGLE ── -->
+  <button class="lang-toggle" id="langBtn">EN</button>
+
   <!-- ── FUNDO DE PÁGINA: VIMEO ── -->
   <div class="vimeo-bg">
     <iframe
@@ -589,17 +768,26 @@
           <span class="logo-sub">Cinematographer</span>
         </div>
       </div>
+      <div class="scroll-hint" id="scrollHint">
+        <span class="scroll-hint-dot"></span>
+        <span class="scroll-hint-line"></span>
+      </div>
     </section>
 
     <!-- BIO -->
-    <section class="bio-section">
+    <section class="bio-section reveal">
+      <div class="bio-avatar-wrap">
+        <img src="images/profile.jpg" alt="Guiri Reyes" class="bio-avatar" />
+      </div>
       <p class="bio-role">Cinematógrafo &amp; Camera Operator</p>
       <p class="bio-location">São Paulo &nbsp;·&nbsp; Brasil</p>
+      <p class="bio-text lang-pt">Cinematógrafo e camera operator com base em São Paulo. Do documentário íntimo ao branded content de alto impacto — projetos visuais que cruzam fronteiras, formatos e continentes.</p>
+      <p class="bio-text lang-en">Cinematographer and camera operator based in São Paulo. From intimate documentary to high-impact branded content — visual projects that cross borders, formats and continents.</p>
       <span class="bio-sep"></span>
     </section>
 
     <!-- GALLERY STRIP -->
-    <section class="gallery-section">
+    <section class="gallery-section reveal">
       <div class="section-header">
         <span class="section-rule"></span>
         <span class="section-label">Selected Work</span>
@@ -635,7 +823,7 @@
     </section>
 
     <!-- LINKS -->
-    <section class="links-section">
+    <section class="links-section reveal">
       <div class="section-header">
         <span class="section-rule"></span>
         <span class="section-label">Links</span>
@@ -681,10 +869,18 @@
         <span class="link-arrow">→</span>
       </a>
 
+      <a href="mailto:cantareirafilmes@gmail.com" class="link-item">
+        <div class="link-left">
+          <span class="link-title">E-mail</span>
+          <span class="link-desc">cantareirafilmes@gmail.com</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
     </section>
 
     <!-- FLOAT VIDEOS — depois dos links -->
-    <section class="float-videos">
+    <section class="float-videos reveal">
       <div class="section-header">
         <span class="section-rule"></span>
         <span class="section-label">Videos</span>
@@ -697,7 +893,7 @@
           <div class="float-video-crop">
             <iframe
               src="https://www.instagram.com/p/Bvu4gqEBKzo/embed/"
-              frameborder="0" scrolling="no" allowtransparency="true"
+              frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"
               allow="autoplay; encrypted-media; picture-in-picture; web-share"
             ></iframe>
             <div class="vid-mask-top"></div>
@@ -714,7 +910,7 @@
           <div class="float-video-crop">
             <iframe
               src="https://www.instagram.com/reel/CciO8huJew8/embed/"
-              frameborder="0" scrolling="no" allowtransparency="true"
+              frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"
               allow="autoplay; encrypted-media; picture-in-picture; web-share"
             ></iframe>
             <div class="vid-mask-top"></div>
@@ -731,7 +927,7 @@
           <div class="float-video-crop">
             <iframe
               src="https://www.instagram.com/reel/CtPOqGsrl0x/embed/"
-              frameborder="0" scrolling="no" allowtransparency="true"
+              frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"
               allow="autoplay; encrypted-media; picture-in-picture; web-share"
             ></iframe>
             <div class="vid-mask-top"></div>
@@ -743,6 +939,43 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- TRAILER -->
+    <section class="trailer-section reveal">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label">Trailer</span>
+      </div>
+      <div class="trailer-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/Op-f84lB9R8"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="clients-section reveal">
+      <div class="section-header">
+        <span class="section-rule"></span>
+        <span class="section-label lang-pt">Clientes</span>
+        <span class="section-label lang-en">Clients</span>
+      </div>
+      <div class="clients-strip">
+        <a href="https://www.rosaneon.com/" target="_blank" rel="noopener" class="client-item">
+          <img src="images/logo-rosaneon.png" alt="Rosa Neon" class="client-logo" />
+        </a>
+        <a href="https://www.youtube.com/@tailoredmanagement" target="_blank" rel="noopener" class="client-item">
+          <img src="images/logo-tm.png" alt="Tailored Management" class="client-logo" />
+        </a>
+        <a href="https://www.instagram.com/drift.hq/" target="_blank" rel="noopener" class="client-item">
+          <img src="images/logo-drifthq.png" alt="Drift HQ" class="client-logo" />
+        </a>
       </div>
     </section>
 
@@ -782,20 +1015,51 @@
 
   <script>
     (function () {
+
+      /* ── INTRO ── */
+      var intro = document.getElementById('intro');
+      setTimeout(function () {
+        intro.classList.add('hide');
+        setTimeout(function () { intro.remove(); }, 600);
+      }, 2000);
+
+      /* ── REEL MODAL ── */
       var modal    = document.getElementById('reelModal');
       var backdrop = document.getElementById('reelBackdrop');
       var closeBtn = document.getElementById('reelClose');
-
-      function open()  { modal.classList.add('is-open'); }
-      function close() { modal.classList.remove('is-open'); }
-
-      setTimeout(open, 1400);
-
-      backdrop.addEventListener('click', close);
-      closeBtn.addEventListener('click', close);
+      function openModal()  { modal.classList.add('is-open'); }
+      function closeModal() { modal.classList.remove('is-open'); }
+      setTimeout(openModal, 2800);
+      backdrop.addEventListener('click', closeModal);
+      closeBtn.addEventListener('click', closeModal);
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
+        if (e.key === 'Escape') closeModal();
       });
+
+      /* ── SCROLL REVEAL ── */
+      var reveals = document.querySelectorAll('.reveal');
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      reveals.forEach(function (el) { ro.observe(el); });
+
+      /* ── SCROLL HINT ── */
+      var hint = document.getElementById('scrollHint');
+      window.addEventListener('scroll', function () {
+        if (hint && window.scrollY > 60) hint.style.opacity = '0';
+      }, { passive: true });
+
+      /* ── LANG TOGGLE ── */
+      var langBtn = document.getElementById('langBtn');
+      var lang = 'pt';
+      langBtn.addEventListener('click', function () {
+        lang = lang === 'pt' ? 'en' : 'pt';
+        document.documentElement.setAttribute('data-lang', lang);
+        langBtn.textContent = lang === 'pt' ? 'EN' : 'PT';
+      });
+
     })();
   </script>
 
