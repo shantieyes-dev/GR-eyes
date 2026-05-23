@@ -197,11 +197,11 @@
     ───────────────────────────────────── */
     .float-videos { margin-top: 36px; }
 
-    /* grid: post full-width no topo, 2 reels lado a lado abaixo */
+    /* stack vertical: post landscape no topo, reels 9:16 abaixo */
     .float-videos-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       padding: 0 32px;
     }
 
@@ -210,14 +210,11 @@
       background: var(--cb);
     }
 
-    /* post ocupa as 2 colunas */
-    .float-video-wide { grid-column: span 2; }
-
-    /* crop do post: landscape, altura proporcional */
+    /* post: landscape */
     .float-video-wide .float-video-crop { height: 196px; }
 
-    /* crop dos reels: portrait 9:16 (~165px wide × 293px) */
-    .float-video-reel .float-video-crop { height: 294px; }
+    /* reels: proporção 9:16 automática pela largura disponível */
+    .float-video-reel .float-video-crop { aspect-ratio: 9 / 16; }
 
     .float-video-crop {
       position: relative;
@@ -685,19 +682,17 @@
     .client-item {
       display: flex;
       align-items: center;
-      opacity: 0.45;
-      transition: opacity 0.3s ease;
+      opacity: 0.75;
+      transition: opacity 0.25s ease;
     }
-    .client-item:hover { opacity: 0.9; }
+    .client-item:hover { opacity: 1; }
     .client-logo {
       height: 28px;
       width: auto;
-      max-width: 100px;
+      max-width: 110px;
       object-fit: contain;
-      filter: grayscale(100%) brightness(2.5);
       display: block;
     }
-    .client-item:hover .client-logo { filter: grayscale(0%) brightness(1); }
 
     /* ─────────────────────────────────────
        FOOTER
