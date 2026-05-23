@@ -205,39 +205,39 @@
 
     .float-video + .float-video { margin-top: 12px; }
 
-    /* janela de recorte — esconde o chrome do Instagram */
+    /* janela de recorte: mostra só o vídeo, corta todo o chrome */
     .float-video-crop {
       position: relative;
-      height: 260px;
+      height: 280px;
       overflow: hidden;
     }
 
     .float-video-crop iframe {
       width: 100%;
-      height: 600px;
+      height: 800px;
       margin-top: -52px;
       border: none;
       display: block;
     }
 
-    /* fade na borda inferior do recorte */
-    .float-video-crop::after {
-      content: '';
+    /* máscara sólida no topo — apaga o header residual */
+    .float-video-crop .vid-mask-top {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 80px;
-      background: linear-gradient(to bottom, transparent, rgba(10,10,10,0.95));
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--cb);
       pointer-events: none;
-      z-index: 2;
+      z-index: 10;
     }
 
-    /* overlay transparente — clicar abre Instagram */
-    .float-video-overlay {
+    /* máscara sólida na base — apaga "View more" e botões */
+    .float-video-crop .vid-mask-bottom {
       position: absolute;
-      inset: 0;
-      z-index: 5;
-      display: block;
-      cursor: pointer;
+      bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent 0%, var(--cb) 55%);
+      pointer-events: none;
+      z-index: 10;
     }
 
     /* barra inferior */
@@ -246,7 +246,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px 14px;
-      background: rgba(10,10,10,0.85);
       border-top: 0.5px solid rgba(201,185,154,0.10);
     }
 
@@ -271,29 +270,30 @@
     .float-video:hover .float-video-action { color: var(--duna); }
 
     /* ─────────────────────────────────────
-       GALLERY STRIP
+       GALLERY GRID
     ───────────────────────────────────── */
     .gallery-section { margin-top: 34px; }
 
-    .gallery-strip {
-      display: flex;
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
       gap: 4px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
       padding: 0 32px;
     }
 
-    .gallery-strip::-webkit-scrollbar { display: none; }
-
     .gallery-item {
-      flex: 0 0 136px;
-      height: 136px;
+      grid-column: span 2;
+      height: 116px;
       overflow: hidden;
-      scroll-snap-align: start;
       position: relative;
       background: #111;
+    }
+
+    /* 4th and 5th items: span 3 columns each (larger, bottom row) */
+    .gallery-item:nth-child(4),
+    .gallery-item:nth-child(5) {
+      grid-column: span 3;
+      height: 154px;
     }
 
     .gallery-item img {
@@ -327,6 +327,17 @@
       text-transform: uppercase;
       color: rgba(201,185,154,0.88);
       pointer-events: none;
+    }
+
+    .gallery-credits {
+      margin-top: 14px;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(201,185,154,0.40);
+      text-align: center;
+      padding: 0 32px;
     }
 
     /* ─────────────────────────────────────
@@ -455,27 +466,34 @@
     /* janela de recorte — esconde chrome do Instagram */
     .reel-modal-crop {
       position: relative;
-      height: 416px;
+      height: 380px;
       overflow: hidden;
     }
 
     .reel-modal-crop iframe {
       width: 100%;
-      height: 740px;
+      height: 800px;
       margin-top: -52px;
       border: none;
       display: block;
     }
 
-    /* fade cobre o footer do Instagram antes de aparecer */
-    .reel-modal-crop::after {
-      content: '';
+    .reel-modal-crop .vid-mask-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--cb);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .reel-modal-crop .vid-mask-bottom {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 130px;
-      background: linear-gradient(to bottom, transparent 0%, rgba(10,10,10,0.80) 55%, #0A0A0A 100%);
+      height: 120px;
+      background: linear-gradient(to bottom, transparent 0%, var(--cb) 50%);
       pointer-events: none;
-      z-index: 2;
+      z-index: 10;
     }
 
     .reel-modal-bar {
@@ -576,7 +594,7 @@
         <span class="section-rule"></span>
         <span class="section-label">Selected Work</span>
       </div>
-      <div class="gallery-strip">
+      <div class="gallery-grid">
         <div class="gallery-item">
           <img src="images/img-live.jpg" alt="Live" style="object-position: center top;" />
           <div class="gallery-item-overlay"></div>
@@ -603,6 +621,7 @@
           <span class="gallery-item-tag">Culture</span>
         </div>
       </div>
+      <p class="gallery-credits">Cinematógrafo &nbsp;·&nbsp; Camera Operator &nbsp;·&nbsp; São Paulo &nbsp;·&nbsp; Brasil</p>
     </section>
 
     <!-- LINKS -->
@@ -669,6 +688,8 @@
             allowtransparency="true"
             allow="autoplay; encrypted-media; picture-in-picture"
           ></iframe>
+          <div class="vid-mask-top"></div>
+          <div class="vid-mask-bottom"></div>
         </div>
         <div class="float-video-bar">
           <span class="float-video-label">Post</span>
@@ -679,6 +700,49 @@
           >Ver no Instagram ↗</a>
         </div>
       </div>
+
+      <div class="float-video">
+        <div class="float-video-crop">
+          <iframe
+            src="https://www.instagram.com/reel/CciO8huJew8/embed/"
+            frameborder="0" scrolling="no"
+            allowtransparency="true"
+            allow="autoplay; encrypted-media; picture-in-picture"
+          ></iframe>
+          <div class="vid-mask-top"></div>
+          <div class="vid-mask-bottom"></div>
+        </div>
+        <div class="float-video-bar">
+          <span class="float-video-label">Reel</span>
+          <a
+            href="https://www.instagram.com/reel/CciO8huJew8/?igsh=MTJ1YmZkcjY3MHQ3NQ=="
+            target="_blank" rel="noopener noreferrer"
+            class="float-video-action"
+          >Ver no Instagram ↗</a>
+        </div>
+      </div>
+
+      <div class="float-video">
+        <div class="float-video-crop">
+          <iframe
+            src="https://www.instagram.com/reel/CtPOqGsrl0x/embed/"
+            frameborder="0" scrolling="no"
+            allowtransparency="true"
+            allow="autoplay; encrypted-media; picture-in-picture"
+          ></iframe>
+          <div class="vid-mask-top"></div>
+          <div class="vid-mask-bottom"></div>
+        </div>
+        <div class="float-video-bar">
+          <span class="float-video-label">Reel</span>
+          <a
+            href="https://www.instagram.com/reel/CtPOqGsrl0x/?igsh=c253cDN6em1vNjI5"
+            target="_blank" rel="noopener noreferrer"
+            class="float-video-action"
+          >Ver no Instagram ↗</a>
+        </div>
+      </div>
+
     </section>
 
     <!-- FOOTER -->
@@ -701,6 +765,8 @@
           allowtransparency="true"
           allow="autoplay; encrypted-media; picture-in-picture"
         ></iframe>
+        <div class="vid-mask-top"></div>
+        <div class="vid-mask-bottom"></div>
       </div>
       <div class="reel-modal-bar">
         <span class="reel-modal-bar-label">Reel</span>
